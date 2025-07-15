@@ -27,7 +27,8 @@ your-repo/
 │   ├── functions.sql      # CREATE FUNCTION … LANGUAGE plpgsql
 │   └── triggers.sql       # CREATE TRIGGER … calls to your PL/pgSQL functions
 │
-├── scripts/             
+├── scripts/        
+|   ├── main.py            # Python file to test other functions
 │   ├── setup_db.py        # Python “apply” script for tables, functions, triggers
 │   ├── teardown_db.py     # (optional) Python script to DROP everything
 │   └── queries.py         # Python file with reusable functions to run ad-hoc SQL

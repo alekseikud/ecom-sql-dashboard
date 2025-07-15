@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS ecom_dashboard_dev
+CREATE DATABASE ecom_dashboard_dev
