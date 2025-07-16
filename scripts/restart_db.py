@@ -11,7 +11,7 @@ def restart_db()->None:
     connection.autocommit=True
     try:
         with connection.cursor() as cursor:
-            cursor.execute(f"DROP DATABASE IF EXISTS {os.getenv('DB_NAME')}")
+            cursor.execute(f"DROP DATABASE IF EXISTS {os.getenv('DB_NAME')} WITH (FORCE)")
             cursor.execute(f"CREATE DATABASE {os.getenv('DB_NAME')}")
         print("DB was successfully resetted")
     except Exception as _ex:
