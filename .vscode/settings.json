@@ -1,0 +1,27 @@
+// .vscode/launch.json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Run load_data.py",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/data/load_data.py",
+      "console": "integratedTerminal",
+      "env": {
+        // Make sure runtime also sees scripts/ on PYTHONPATH
+        "PYTHONPATH": "${workspaceFolder}/scripts:${workspaceFolder}/data"
+      }
+    },
+    {
+      "name": "Python: Run main.py",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/main.py",
+      "console": "integratedTerminal",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}/scripts:${workspaceFolder}/data"
+      }
+    }
+  ]
+}

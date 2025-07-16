@@ -1,4 +1,5 @@
-CREATE TYPE IF NOT EXISTS Order_status AS ENUM
+DROP TYPE IF EXISTS order_status;
+CREATE TYPE order_status AS ENUM
 (
   'pending',
   'processing',
@@ -7,7 +8,7 @@ CREATE TYPE IF NOT EXISTS Order_status AS ENUM
   'cancelled'
 );
 
-CREATE TABLE IF NOT EXISTS Customers
+CREATE TABLE IF NOT EXISTS customers
 (
 	id SERIAL PRIMARY KEY,
 	name TEXT NOT NULL,
@@ -15,13 +16,13 @@ CREATE TABLE IF NOT EXISTS Customers
 	signup_date TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE TABLE IF NOT EXISTS Categories
+CREATE TABLE IF NOT EXISTS categories
 (
 	id SERIAL PRIMARY KEY,
 	name TEXT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS Products
+CREATE TABLE IF NOT EXISTS products
 (
 	id SERIAL PRIMARY KEY,
 	name TEXT NOT NULL,
@@ -32,7 +33,7 @@ CREATE TABLE IF NOT EXISTS Products
 		CHECK (price>=0)
 );
 
-CREATE TABLE IF NOT EXISTS Orders 
+CREATE TABLE IF NOT EXISTS orders 
 (
 	id SERIAL PRIMARY KEY, 
 	customer_id INT NOT NULL 
@@ -43,7 +44,7 @@ CREATE TABLE IF NOT EXISTS Orders
 		DEFAULT  'pending'
 );
 
-CREATE TABLE IF NOT EXISTS OrderItems
+CREATE TABLE IF NOT EXISTS orderItems
 (
 	order_id INT NOT NULL 
 		REFERENCES Orders(id)
@@ -58,7 +59,7 @@ CREATE TABLE IF NOT EXISTS OrderItems
 	PRIMARY KEY(order_id,product_id)
 );
 
-CREATE TABLE IF NOT EXISTS "Returns"
+CREATE TABLE IF NOT EXISTS "returns"
 (
 	order_id INT NOT NULL,
 	product_id INT NOT NULL,

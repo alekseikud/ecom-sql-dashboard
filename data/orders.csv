@@ -1,0 +1,6 @@
+id,customer_id,order_date,status
+1,1,2025-06-01,processing
+2,2,2025-06-02,shipped
+3,1,2025-06-05,delivered
+4,3,2025-06-10,pending
+5,4,2025-06-12,processing
