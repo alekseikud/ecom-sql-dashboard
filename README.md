@@ -21,22 +21,32 @@ This walkthrough takes you from initial DDL all the way to a functioning analyti
 ## 📁 Repository Structure
 
 ```
-your-repo/
-├── schema/            
-│   ├── tables.sql         # CREATE TABLE statements
-│   ├── functions.sql      # CREATE FUNCTION … LANGUAGE plpgsql
-│   └── triggers.sql       # CREATE TRIGGER … calls to your PL/pgSQL functions
+.
+├── data/                            # CSV data + loader script
+│   ├── __pycache__/                 # Python cache
+│   ├── categories.csv
+│   ├── customers.csv
+│   ├── load_data.py                 # Reads CSVs & INSERTs/COPYs into the DB
+│   ├── order_items.csv
+│   ├── orders.csv
+│   ├── products.csv
+│   └── returns.csv
 │
-├── scripts/        
-|   ├── main.py            # Python file to test other functions
-│   ├── setup_db.py        # Python “apply” script for tables, functions, triggers
-│   ├── teardown_db.py     # (optional) Python script to DROP everything
-│   └── queries.py         # Python file with reusable functions to run ad-hoc SQL
+├── scripts/                         # Database management & query utilities
+│   ├── __pycache__/
+│   ├── queries.py                   # Reusable functions to run ad-hoc SQL
+│   ├── restart_db.py                # DROP + CREATE database for a fresh start
+│   ├── setup_db.py                  # APPLY schema: types, tables, functions, triggers
+│   └── teardown_db.py               # DROP everything (schema + data)
 │
-├── data/                 
-│   └── load_data.sql      # INSERT / COPY statements for seed CSVs
+├── schema/                          # DDL scripts
+│   ├── functions.sql                # PL/pgSQL helper functions
+│   ├── tables.sql                   # CREATE TYPE / TABLE statements
+│   └── triggers.sql                 # TRIGGER definitions
 │
-├── .env                   # Your DB connection URL (git-ignored)
-├── .gitignore
-└── README.md              # (you already have one)
+├── reports/                         # Analytics & visualization dashboards 
+│   └── …                            
+│
+├── main.py                          # Quick end-to-end runner for setup, load, queries
+└──  README.md                        # This file
 ```

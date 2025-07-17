@@ -1,3 +1,4 @@
 order_id,product_id,return_date,reason
-3,4,2025-06-15,Wrong size
-5,1,2025-06-20,Changed mind
+1,4,2025-01-20,Wrong size
+3,5,2025-03-18,Defective
+5,8,2025-04-05,Changed mind
