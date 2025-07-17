@@ -1,0 +1,15 @@
+-----------TRIGGER FUNCTION FOR CUSTOMER NAME NORMALISATION------------
+CREATE OR REPLACE FUNCTION normalize_data()
+RETURNS TRIGGER
+LANGUAGE PLPGSQL
+AS $$
+BEGIN
+	NEW.name:=INITCAP(TRIM(NEW.name));
+	RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS data_normalization ON customers;
+CREATE TRIGGER data_normalization
+BEFORE INSERT ON customers
+EXECUTE FUNCTION normalize_data();
