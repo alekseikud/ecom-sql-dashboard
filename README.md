@@ -22,8 +22,7 @@ This walkthrough takes you from initial DDL all the way to a functioning analyti
 
 ```
 .
-├── data/                            # CSV data + loader script
-│   ├── __pycache__/                 # Python cache
+├── data/                            # CSV data + loader script 
 │   ├── categories.csv
 │   ├── customers.csv
 │   ├── load_data.py                 # Reads CSVs & INSERTs/COPYs into the DB
@@ -33,7 +32,6 @@ This walkthrough takes you from initial DDL all the way to a functioning analyti
 │   └── returns.csv
 │
 ├── scripts/                         # Database management & query utilities
-│   ├── __pycache__/
 │   ├── queries.py                   # Reusable functions to run ad-hoc SQL
 │   ├── restart_db.py                # DROP + CREATE database for a fresh start
 │   ├── setup_db.py                  # APPLY schema: types, tables, functions, triggers
