@@ -122,3 +122,36 @@ def read_from_csv()->None:  # READING DATA FROM CSVS TO DATABASE
     finally:
         cursor.close()
         server_disconnect(connection)
+
+def load_functions():
+    connection:_Connection=server_connect()#type:ignore
+    cursor=connection.cursor()
+    connection.autocommit=True
+    try:
+        with open("schema/functions.sql",encoding="UTF-8") as file:
+            raw_sql=file.read()
+            for itr in sqlparse.split(raw_sql,strip_semicolon=True):
+                statement=itr.strip()
+                if statement:
+                    cursor.execute(statement)
+    except Exception as _ex:
+        raise Exception(f"An error occurred during loading function.Error:{_ex}")
+    finally:
+        cursor.close()
+        server_disconnect(connection)
+
+def load_triggers():
+    connection:_Connection=server_connect()#type:ignore
+    cursor=connection.cursor()
+    try:
+        with open("schema/triggers.sql",encoding="UTF-8") as file:
+            raw_sql=file.read()
+            for itr in sqlparse.split(raw_sql,strip_semicolon=True):
+                statement=itr.strip()
+                if statement:
+                    cursor.execute(statement)
+    except Exception as _ex:
+        raise Exception(f"An error occurred during loading trigger function or a trigger.Error:{_ex}")
+    finally:
+        cursor.close()
+        server_disconnect(connection)

@@ -2,7 +2,7 @@ from psycopg2.extensions import connection as _Connection
 
 from scripts.setup_db import server_connect,server_disconnect
 from scripts.restart_db import restart_db
-from data.load_data import read_from_csv
+from data.load_data import read_from_csv,load_triggers,load_functions
 from scripts.queries import print_all_tables
 if __name__ == "__main__":
     connection:_Connection=server_connect() # type: ignore
@@ -13,4 +13,6 @@ if __name__ == "__main__":
 
     restart_db()
     read_from_csv()
+    load_triggers()
+    load_functions()
     print_all_tables()
