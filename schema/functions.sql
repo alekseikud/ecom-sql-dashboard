@@ -40,10 +40,10 @@ $$;
 
 ------------New vs. Returning Customer Analysis------------
 CREATE OR REPLACE FUNCTION customer_retention(start_date DATE, end_date DATE)
-RETURNS TABLE(month DATE,"returned customers" INT, "new customers" INT)
+RETURNS TABLE(month TEXT,"returned customers" INT, "new customers" INT)
 LANGUAGE SQL
 AS $$
-	SELECT DATE_TRUNC('month',o1.order_date),
+	SELECT SUBSTRING(o1.order_date::TEXT,1,7) AS month,
 	COUNT( DISTINCT
 		CASE
 		WHEN o2.order_date IS NOT NULL THEN o1.customer_id
@@ -58,7 +58,7 @@ AS $$
 	on o1.customer_id=o2.customer_id AND 
 	o2.order_date<o1.order_date
 	WHERE o1.order_date BETWEEN start_date AND end_date
-	GROUP BY DATE_TRUNC('month',o1.order_date);
+	GROUP BY month;
 $$;
 
 ----------------Rating customers----------------
@@ -105,3 +105,11 @@ AS $$
 	ORDER BY "net revenue" DESC;
 $$;
 
+----------------First purchase date----------------
+CREATE OR REPLACE FUNCTION first_sale_date()
+RETURNS DATE
+LANGUAGE SQL
+AS $$
+	SELECT MIN(order_date)
+	FROM orders
+$$;
