@@ -79,6 +79,7 @@ def get_first_date()->datetime|None:
             return (cursor.fetchall())[0][0]
     except Exception as _ex:
         raise RuntimeError(f"Error ocurred during finding first date.\nError:{_ex}")
+    
 
 #------------FUNCTION New vs. Returning Customer Analysis------------
 def customer_retention_csv(start_date:datetime|None=None,end_date:datetime=datetime.now())->None:
