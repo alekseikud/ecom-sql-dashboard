@@ -1,4 +1,4 @@
-DROP TYPE IF EXISTS order_status;
+DROP TYPE IF EXISTS order_status CASCADE;
 CREATE TYPE order_status AS ENUM
 (
   'pending',

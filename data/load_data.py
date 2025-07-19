@@ -29,7 +29,8 @@ def read_from_csv()->None:  # READING DATA FROM CSVS TO DATABASE
     update_tables()
     try:
 #-------------------READING INTO TABLE Customers----------------
-        with open("data/customers.csv",newline="") as file:
+        file_name="customers.csv"
+        with open(f"data/{file_name}",newline="") as file:
             reader=csv.DictReader(file)
             for row in reader:
                 cursor.execute("""INSERT INTO customers(id,name,email,signup_date) 
@@ -42,9 +43,12 @@ def read_from_csv()->None:  # READING DATA FROM CSVS TO DATABASE
                                 )
                             )
         connection.commit()
+        os.system(f"cp data/{file_name} data/parsed_csvs/{file_name}")
+        os.system(f"head -n 1 data/parsed_csvs/{file_name} > data/{file_name}")
 
 #-------------------READING INTO TABLE categories----------------
-        with open("data/categories.csv",newline="") as file:
+        file_name="categories.csv"
+        with open(f"data/{file_name}",newline="") as file:
             reader=csv.DictReader(file)
             for row in reader:
                 cursor.execute("""INSERT INTO categories(id,name) 
@@ -55,9 +59,13 @@ def read_from_csv()->None:  # READING DATA FROM CSVS TO DATABASE
                                 )
                             )
         connection.commit()
+        os.system(f"cp data/{file_name} data/parsed_csvs/{file_name}")
+        os.system(f"head -n 1 data/parsed_csvs/{file_name} > data/{file_name}")
+
 
 #-------------------READING INTO TABLE products----------------
-        with open("data/products.csv",newline="") as file:
+        file_name="products.csv"
+        with open(f"data/{file_name}",newline="") as file:
             reader=csv.DictReader(file)
             for row in reader:
                 cursor.execute("""INSERT INTO products(id,name,category_id,price) 
@@ -70,9 +78,12 @@ def read_from_csv()->None:  # READING DATA FROM CSVS TO DATABASE
                                 )
                             )
         connection.commit()
+        os.system(f"cp data/{file_name} data/parsed_csvs/{file_name}")
+        os.system(f"head -n 1 data/parsed_csvs/{file_name} > data/{file_name}")
 
 #-------------------READING INTO TABLE orders----------------
-        with open("data/orders.csv",newline="") as file:
+        file_name="orders.csv"
+        with open(f"data/{file_name}",newline="") as file:
             reader=csv.DictReader(file)
             for row in reader:
                 cursor.execute("""INSERT INTO orders(id,customer_id,order_date,status) 
@@ -85,9 +96,12 @@ def read_from_csv()->None:  # READING DATA FROM CSVS TO DATABASE
                                 )
                             )
         connection.commit()  
+        os.system(f"cp data/{file_name} data/parsed_csvs/{file_name}")
+        os.system(f"head -n 1 data/parsed_csvs/{file_name} > data/{file_name}")
 
 #-------------------READING INTO TABLE orderItems----------------
-        with open("data/order_items.csv",newline="") as file:
+        file_name="order_items.csv"
+        with open(f"data/{file_name}",newline="") as file:
             reader=csv.DictReader(file)
             for row in reader:
                 cursor.execute("""INSERT INTO orderItems(order_id,product_id,quantity,unit_price) 
@@ -100,9 +114,12 @@ def read_from_csv()->None:  # READING DATA FROM CSVS TO DATABASE
                                 )
                             )
         connection.commit()
+        os.system(f"cp data/{file_name} data/parsed_csvs/{file_name}")
+        os.system(f"head -n 1 data/parsed_csvs/{file_name} > data/{file_name}")
 
 #-------------------READING INTO TABLE returns----------------
-        with open("data/returns.csv",newline="") as file:
+        file_name="returns.csv"
+        with open(f"data/{file_name}",newline="") as file:
             reader=csv.DictReader(file)
             for row in reader:
                 cursor.execute("""INSERT INTO "returns"(order_id,product_id,return_date,reason) 
@@ -115,6 +132,9 @@ def read_from_csv()->None:  # READING DATA FROM CSVS TO DATABASE
                                 )
                             )
         connection.commit()
+        os.system(f"cp data/{file_name} data/parsed_csvs/{file_name}")
+        os.system(f"head -n 1 data/parsed_csvs/{file_name} > data/{file_name}")
+
         print("Everything was read successfully!")
     except Exception as _ex:
         connection.rollback()
