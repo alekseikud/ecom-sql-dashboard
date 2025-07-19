@@ -3,7 +3,7 @@ from psycopg2.extensions import connection as _Connection
 from scripts.setup_db import server_connect,server_disconnect
 from scripts.restart_db import restart_db
 from data.load_data import read_from_csv,load_triggers,load_functions
-from scripts.queries import print_all_tables,get_revenue_csv,customer_retention_csv
+from scripts.queries import print_all_tables,get_revenue_csv,customer_retention_csv,customer_analisis_csv
 import datetime
 if __name__ == "__main__":
     connection:_Connection=server_connect() # type: ignore
@@ -16,6 +16,7 @@ if __name__ == "__main__":
     read_from_csv()
     load_triggers()
     load_functions()
-    # print_all_tables()
+    print_all_tables()
     get_revenue_csv()
     customer_retention_csv()
+    customer_analisis_csv()

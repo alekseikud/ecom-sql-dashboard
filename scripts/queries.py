@@ -89,10 +89,32 @@ def customer_retention_csv(start_date:datetime|None=None,end_date:datetime=datet
                 start:datetime|None=get_first_date()
                 if start:
                     start_date=datetime(start.year,start.month,start.day)
-            cursor.execute(f"SELECT * FROM customer_retention('{str(start_date.date())}', '{str(end_date.date())}')")
+            sql="SELECT * FROM customer_retention(%s,%s)"
+            parameters=(str(start_date.date()),str(end_date.date()))#type:ignore
+            cursor.execute(sql,parameters)
             rows=cursor.fetchall()
             if rows and cursor.description:
                 select_to_csv("customer_retention",rows,cursor.description)
+    except Exception as _ex :
+        raise RuntimeError(f"Failed making report. Error:{_ex}")
+    finally:
+        server_disconnect(connection)
+
+#----------------Function Rating customers----------------
+def customer_analisis_csv(start_date:datetime|None=None,end_date:datetime=datetime.now())->None:
+    connection:_Connection=server_connect()#type:ignore
+    try:
+        with connection.cursor() as cursor:
+            if start_date==None:
+                start:datetime|None=get_first_date()
+                if start:
+                    start_date=datetime(start.year,start.month,start.day)
+            sql="SELECT * FROM customer_analisis(%s,%s)"
+            parameters=(str(start_date.date()),str(end_date.date()))#type:ignore
+            cursor.execute(sql,parameters)
+            rows=cursor.fetchall()
+            if rows and cursor.description:
+                select_to_csv("customer_analisis",rows,cursor.description)
     except Exception as _ex :
         raise RuntimeError(f"Failed making report. Error:{_ex}")
     finally:
