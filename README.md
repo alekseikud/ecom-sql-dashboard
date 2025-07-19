@@ -7,6 +7,7 @@
 * [Project Layout](#project-layout)
 * [Quick‑start](#quick-start)
 * [Usage](#usage)
+* [Makefile](#makefile)
 * [Extending the project](#extending-the-project)
 * [Contributing](#contributing)
 * [License](#license)
@@ -138,11 +139,25 @@ python scripts/queries.py print_all_tables
 
 ---
 
+## Makefile
+
+`Makefile` uses your project’s `.venv`.
+
+**`Makefile` Targets explained:**
+
+* **init (default)**: Runs `clean`, `set_up`, and `load_data` in sequence. This is the target invoked when you run `make` without arguments.
+* **clean**: Removes all files in `reports/` and `data/parsed_csvs/`, then clears the terminal.
+* **set\_up**: Drops and recreates the database by calling `restart_db()` in `scripts.restart_db`.
+* **load\_data**: Inserts all CSV files into your database by invoking `read_from_csv()` from `data.load_data`.
+* **reports**: Generates every analytical report—monthly/total revenue, category performance, customer retention, and customer analysis—and displays a success message when complete.
+
+---
+
 ## Extending the project
 
 1. **New columns / tables** — add them to `schema/tables.sql`, then rerun `scripts/load_data.update_tables()` or recreate the database.
-2. **Business metrics** — drop a new `CREATE FUNCTION` in `schema/functions.sql`; Python will pick it up automatically.
-3. **Data‑quality rules** — write a trigger in `schema/triggers.sql` and call `load_triggers()`.
+2. **Business metrics** — drop a new `CREATE FUNCTION` in `schema/functions.sql`; Python utilities will pick it up automatically.
+3. **Data‑quality rules** — write a trigger in `schema/triggers.sql` and call `scripts/load_data.load_triggers()` or include it in your orchestrator script.
 
 ---
 
