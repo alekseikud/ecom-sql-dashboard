@@ -2,7 +2,7 @@
 
 from scripts.setup_db import server_disconnect
 from scripts.restart_db import restart_db
-from data.load_data import (
+from scripts.load_data import (
     read_from_csv,
     load_functions,
     load_triggers,

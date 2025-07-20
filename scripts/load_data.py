@@ -2,8 +2,15 @@ import os
 import csv
 import sqlparse
 from psycopg2.extensions import connection as _Connection
+from pydantic import constr,EmailStr,TypeAdapter
 
 from scripts.setup_db import server_connect, server_disconnect
+
+text= TypeAdapter(str)
+name= TypeAdapter(constr(min_length=3, max_length=32, pattern=r'^[A-Za-z0-9 ]*$'))
+intiger= TypeAdapter(constr(min_length=1, max_length=10, pattern=r'^([1-9][0-9]*|0)$'))
+price= TypeAdapter(constr(min_length=1, max_length=10, pattern=r'^(?:0|[1-9][0-9]*)(?:\.[0-9][0-9]?)?$'))
+email= TypeAdapter(EmailStr)
 
 def update_tables()->None:
     connection:_Connection=server_connect()#type:ignore
@@ -36,13 +43,14 @@ def read_from_csv()->None:  # READING DATA FROM CSVS TO DATABASE
                 cursor.execute("""INSERT INTO customers(id,name,email,signup_date) 
                             VALUES(%s,%s,%s,%s)""",
                                 (
-                                int(row['id']),
-                                row['name'],
-                                row['email'],
+                                intiger.validate_python(row['id']),
+                                name.validate_python(row['name']),
+                                email.validate_python(row['email']),
                                 row['signup_date']
                                 )
                             )
         connection.commit()
+        print("WoW")
         os.system(f"cp data/{file_name} data/parsed_csvs/{file_name}")
         os.system(f"head -n 1 data/parsed_csvs/{file_name} > data/{file_name}")
 
@@ -54,8 +62,8 @@ def read_from_csv()->None:  # READING DATA FROM CSVS TO DATABASE
                 cursor.execute("""INSERT INTO categories(id,name) 
                                 VALUES(%s,%s)""",
                                 (
-                                int(row['id']),
-                                row['name']
+                                intiger.validate_python(row['id']),
+                                text.validate_python(row['name'])
                                 )
                             )
         connection.commit()
@@ -71,10 +79,10 @@ def read_from_csv()->None:  # READING DATA FROM CSVS TO DATABASE
                 cursor.execute("""INSERT INTO products(id,name,category_id,price) 
                                 VALUES(%s,%s,%s,%s)""",
                                 (
-                                int(row['id']),
-                                row['name'],
-                                int(row['category_id']),
-                                float(row['price'])
+                                intiger.validate_python(row['id']),
+                                text.validate_python(row['name']),
+                                intiger.validate_python(row['category_id']),
+                                price.validate_python(row['price'])
                                 )
                             )
         connection.commit()
@@ -89,8 +97,8 @@ def read_from_csv()->None:  # READING DATA FROM CSVS TO DATABASE
                 cursor.execute("""INSERT INTO orders(id,customer_id,order_date,status) 
                                 VALUES(%s,%s,%s,%s)""",
                                 (
-                                int(row['id']),
-                                int(row['customer_id']),
+                                intiger.validate_python(row['id']),
+                                intiger.validate_python(row['customer_id']),
                                 row['order_date'],
                                 row['status']
                                 )
@@ -107,10 +115,10 @@ def read_from_csv()->None:  # READING DATA FROM CSVS TO DATABASE
                 cursor.execute("""INSERT INTO orderItems(order_id,product_id,quantity,unit_price) 
                                 VALUES(%s,%s,%s,%s)""",
                                 (
-                                int(row['order_id']),
-                                int(row['product_id']),
-                                int(row['quantity']),
-                                float(row['unit_price'])
+                                intiger.validate_python(row['order_id']),
+                                intiger.validate_python(row['product_id']),
+                                intiger.validate_python(row['quantity']),
+                                price.validate_python(row['unit_price'])
                                 )
                             )
         connection.commit()
@@ -125,10 +133,10 @@ def read_from_csv()->None:  # READING DATA FROM CSVS TO DATABASE
                 cursor.execute("""INSERT INTO "returns"(order_id,product_id,return_date,reason) 
                                 VALUES(%s,%s,%s,%s)""",
                                 (
-                                int(row['order_id']),
-                                int(row['product_id']),
+                                intiger.validate_python(row['order_id']),
+                                intiger.validate_python(row['product_id']),
                                 row['return_date'],
-                                row['reason']
+                                text.validate_python(row['reason'])
                                 )
                             )
         connection.commit()

@@ -11,7 +11,7 @@ set_up:
 
 # Bulk-insert CSVs into tables
 load_data:
-	@$(PYTHON) -c "from data.load_data import read_from_csv;read_from_csv()"
+	@$(PYTHON) -c "from scripts.load_data import read_from_csv;read_from_csv()"
 
 # Cleanup reports output and parsed CSVs
 clean:
