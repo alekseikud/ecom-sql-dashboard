@@ -50,7 +50,6 @@ def read_from_csv()->None:  # READING DATA FROM CSVS TO DATABASE
                                 )
                             )
         connection.commit()
-        print("WoW")
         os.system(f"cp data/{file_name} data/parsed_csvs/{file_name}")
         os.system(f"head -n 1 data/parsed_csvs/{file_name} > data/{file_name}")
 

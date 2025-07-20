@@ -3,6 +3,7 @@ from psycopg2._psycopg import Column
 from tabulate import tabulate
 from typing import Any
 from datetime import datetime
+import os
 import csv
 
 from scripts.setup_db import server_connect,server_disconnect
@@ -31,7 +32,7 @@ def print_all_tables()->None:
 #----------FUNCTION FOR  WRITING REPORTS TO CSVs ------------
 def select_to_csv(csv_name:str,rows:list[tuple[Any,...]],header:tuple[Column,...])->None:
     try:
-        # os.system(f"touch reports/{csv_name}.csv") Do not need since opening automatically create a file
+        os.system(f"mkdir reports")
         with open(f"reports/{csv_name}.csv",mode ="w",encoding="UTF-8") as file:
             writer=csv.writer(file)
             writer.writerow([itr[0] for itr in header])
